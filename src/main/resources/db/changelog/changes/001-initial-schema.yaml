@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: paintball_admin
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: chat_id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  name: games_played
+                  type: INTEGER
+                  defaultValue: 0
+              - column:
+                  name: bonus_points
+                  type: INTEGER
+                  defaultValue: 0
+              - column:
+                  name: registration_date
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: terms_accepted
+                  type: BOOLEAN
+                  defaultValue: false
