@@ -16,4 +16,5 @@ public class User {
     private int bonusPoints;
     private LocalDateTime registrationDate;
     private boolean termsAccepted;
+    private boolean hasPendingRequest;
 }

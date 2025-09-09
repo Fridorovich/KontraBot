@@ -42,7 +42,8 @@ public class DatabaseManager {
                         rs.getInt("games_played"),
                         rs.getInt("bonus_points"),
                         LocalDateTime.parse(rs.getString("registration_date")),
-                        rs.getBoolean("terms_accepted")
+                        rs.getBoolean("terms_accepted"),
+                        rs.getBoolean("has_pending_request")
                 );
             }
         } catch (SQLException e) {
@@ -323,5 +324,40 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean hasPendingRequest(Long chatId) {
+        initializeDatabase();
+        String sql = "SELECT has_pending_request FROM users WHERE chat_id = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setLong(1, chatId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getBoolean("has_pending_request");
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Ошибка при проверке pending request: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public void setPendingRequestStatus(Long chatId, boolean status) {
+        initializeDatabase();
+        String sql = "UPDATE users SET has_pending_request = ? WHERE chat_id = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setBoolean(1, status);
+            pstmt.setLong(2, chatId);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("❌ Ошибка при обновлении статуса запроса: " + e.getMessage());
+        }
     }
 }

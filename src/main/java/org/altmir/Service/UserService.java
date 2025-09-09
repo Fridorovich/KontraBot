@@ -16,7 +16,7 @@ public class UserService {
         User user = databaseManager.getUser(chatId);
 
         if (user == null) {
-            user = new User(chatId, username, 0, 0, LocalDateTime.now(), false);
+            user = new User(chatId, username, 0, 0, LocalDateTime.now(), false, false);
             databaseManager.saveUser(user);
         }
 
@@ -26,6 +26,14 @@ public class UserService {
     public boolean hasAcceptedTerms(Long chatId) {
         User user = databaseManager.getUser(chatId);
         return user != null && user.isTermsAccepted();
+    }
+
+    public boolean hasPendingRequest(Long chatId) {
+        return databaseManager.hasPendingRequest(chatId);
+    }
+
+    public void setPendingRequestStatus(Long chatId, boolean status) {
+        databaseManager.setPendingRequestStatus(chatId, status);
     }
 
     public void acceptTerms(Long chatId) {

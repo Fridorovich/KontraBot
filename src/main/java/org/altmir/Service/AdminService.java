@@ -39,15 +39,20 @@ public class AdminService {
     public void approveGameRequest(Long requestId, Long adminId) {
         databaseManager.updatePendingGameStatus(requestId, "APPROVED", adminId);
 
-        // Добавляем игру пользователю
         Long userChatId = databaseManager.getUserChatIdFromRequest(requestId);
         if (userChatId != null) {
             databaseManager.addGame(userChatId);
+            databaseManager.setPendingRequestStatus(userChatId, false); // Сбрасываем флаг
         }
     }
 
     public void rejectGameRequest(Long requestId, Long adminId) {
         databaseManager.updatePendingGameStatus(requestId, "REJECTED", adminId);
+
+        Long userChatId = databaseManager.getUserChatIdFromRequest(requestId);
+        if (userChatId != null) {
+            databaseManager.setPendingRequestStatus(userChatId, false);
+        }
     }
 
     public Long getUserChatIdFromRequest(Long requestId) {

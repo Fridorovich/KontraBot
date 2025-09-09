@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: paintball_admin
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: has_pending_request
+                  type: BOOLEAN
+                  defaultValue: false

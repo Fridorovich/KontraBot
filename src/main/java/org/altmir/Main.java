@@ -10,8 +10,8 @@ public class Main {
         try {
             DatabaseManager dbManager = new DatabaseManager();
 
-            Long firstAdminId = 1070503623L;
-            dbManager.addAdmin(firstAdminId, "EN", firstAdminId);
+            //Long firstAdminId = 1070503623L;
+            //dbManager.addAdmin(firstAdminId, "EN", firstAdminId);
 
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(new PaintballBot("Контра - Первоуральск", "8432592072:AAGeUEXPJ52UnEJJpCLuNqOhQa8CZSZ14f0"));
